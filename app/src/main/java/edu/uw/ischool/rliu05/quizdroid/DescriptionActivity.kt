@@ -18,8 +18,8 @@ class DescriptionActivity : AppCompatActivity() {
 
         val topic = (application as QuizApp).repository.getTopic(clickedItem!!)
 
-        overview.text = topic.shortDesc
-        description.text = topic.longDesc
+        overview.text = topic.title
+        description.text = topic.desc
         buttonBegin.setOnClickListener {
             val intent = Intent(this, QuizActivity::class.java).apply {
                 putExtra("questionNum", 0)

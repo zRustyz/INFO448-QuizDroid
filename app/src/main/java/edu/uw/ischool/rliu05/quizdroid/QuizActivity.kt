@@ -7,13 +7,12 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 
 class QuizActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.quiz_layout)
-        val question: TextView = findViewById(R.id.TextViewQuestion)
+        val textViewQuestion: TextView = findViewById(R.id.TextViewQuestion)
         val radioGroup: RadioGroup = findViewById(R.id.radioGroup)
         val btnSubmit: Button = findViewById(R.id.buttonSubmit)
         val choice1: RadioButton = findViewById(R.id.radioButton)
@@ -24,11 +23,11 @@ class QuizActivity : AppCompatActivity(){
         val questionNumber = intent.getIntExtra("questionNum", 0)
         var correctAns = intent.getIntExtra("correctAns", 0)
         val quiz = (application as QuizApp).repository.getTopic(clickedItem!!).question[questionNumber]
-        question.text = quiz.question
-        choice1.text = quiz.choices[0]
-        choice2.text = quiz.choices[1]
-        choice3.text = quiz.choices[2]
-        choice4.text = quiz.choices[3]
+        textViewQuestion.text = quiz.question
+        choice1.text = quiz.answers[0]
+        choice2.text = quiz.answers[1]
+        choice3.text = quiz.answers[2]
+        choice4.text = quiz.answers[3]
         btnSubmit.isEnabled = false
         radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val selectedRadioButton = findViewById<RadioButton>(checkedId)

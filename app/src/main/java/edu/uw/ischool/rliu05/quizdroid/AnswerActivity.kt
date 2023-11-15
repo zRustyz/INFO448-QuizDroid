@@ -20,7 +20,7 @@ class AnswerActivity : AppCompatActivity(){
         var selectedText = intent.getStringExtra("selectedChoice")
         val topic = (application as QuizApp).repository.getTopic(clickedItem!!)
         val quiz = topic.question[questionNumber]
-        val correct = quiz.choices[quiz.correctAns]
+        val correct = quiz.answers[quiz.answer]
         if (selectedText == correct) {
             correctAns++
         }
