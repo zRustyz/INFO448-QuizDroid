@@ -42,8 +42,11 @@ class QuizApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val externalFileDir = getExternalFilesDir("QuizDroidRepo")
+        Log.i("FileReader", "Files Dir is $externalFileDir")
         try {
-            val reader = FileReader(filesDir.toString() + "/Questions.txt")
+
+            val reader = FileReader(externalFileDir.toString() + "/Questions.txt")
             val jsonArray = JSONArray(reader.readText())
             Log.i("JSONArray", "Json content is $jsonArray")
             reader.close()
@@ -91,7 +94,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerViewQuizTopics = findViewById(R.id.recyclerViewQuizTopics)
-        Log.i("QuizDroid", "file dir is $filesDir")
 
 
         adapter = Adapter(this, (application as QuizApp).repository.getKeys()) { clickedItem ->
