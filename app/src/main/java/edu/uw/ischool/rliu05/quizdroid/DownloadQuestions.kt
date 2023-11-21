@@ -2,6 +2,7 @@ package edu.uw.ischool.rliu05.quizdroid
 
 import android.app.IntentService
 import android.content.Intent
+import android.util.Log
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStreamReader
@@ -20,6 +21,7 @@ class DownloadQuestions : IntentService("DownloadQuestion") {
                 val inputStream = urlConnection.getInputStream()
                 val reader = InputStreamReader(inputStream)
                 val fileName = "Questions.json"
+                Log.i("Download", "Downloading and writing JSON")
                 val folder = getExternalFilesDir("QuizDroidRepo")
                 val file = File(folder, fileName)
                 val outputStream = FileOutputStream(file)

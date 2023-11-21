@@ -56,7 +56,7 @@ class QuizApp : Application() {
     override fun onCreate() {
         super.onCreate()
         runBlocking {
-            download()
+//            download()
             update()
         }
         repository = TestRepo(repoMap)
@@ -151,9 +151,9 @@ class MainActivity : AppCompatActivity() {
     private fun startBackgroundService() {
         val activityThis = this
         val alarmManager : AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(activityThis, AlarmReciever::class.java)
+        val intent = Intent(activityThis, AlarmReciever::class.java).apply { putExtra("timw", 123) }
         val pendingIntent = PendingIntent.getBroadcast(activityThis, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val firstTriggerAtMillis = System.currentTimeMillis()  + interval
+        val firstTriggerAtMillis = System.currentTimeMillis()
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
             firstTriggerAtMillis,
             interval,
