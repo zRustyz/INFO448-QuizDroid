@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -56,7 +57,7 @@ class QuizApp : Application() {
     override fun onCreate() {
         super.onCreate()
         runBlocking {
-//            download()
+            download()
             update()
         }
         repository = TestRepo(repoMap)
@@ -97,7 +98,6 @@ class QuizApp : Application() {
                 val desc = topicObject.getString("desc")
 
                 val questionsJSONArray = topicObject.getJSONArray("questions")
-                // Iterate through questions for each topic
 
                 val questionsArray: Array<Questions> = Array(questionsJSONArray.length()) {
                     val questionObject = questionsJSONArray.getJSONObject(it)
@@ -123,7 +123,6 @@ class QuizApp : Application() {
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerViewQuizTopics: RecyclerView
     private lateinit var adapter: Adapter
-    private var interval: Long = 60000
 
 
 
@@ -132,6 +131,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerViewQuizTopics = findViewById(R.id.recyclerViewQuizTopics)
+
+        val prefBtn = findViewById<Button>(R.id.button2)
+
+        prefBtn.setOnClickListener {
+            val intent = Intent(this, Prefs::class.java)
+            startActivity(intent)
+        }
+
+        Log.i("Main", "Sending Broadcast")
+
+
 
         adapter = Adapter(this, (application as QuizApp).repository.getKeys()) { clickedItem ->
             val intent = Intent(this, DescriptionActivity::class.java).apply {
@@ -145,18 +155,5 @@ class MainActivity : AppCompatActivity() {
 
         recyclerViewQuizTopics.layoutManager = gridLayoutManager
         recyclerViewQuizTopics.adapter = adapter
-        startBackgroundService()
-    }
-
-    private fun startBackgroundService() {
-        val activityThis = this
-        val alarmManager : AlarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(activityThis, AlarmReciever::class.java).apply { putExtra("timw", 123) }
-        val pendingIntent = PendingIntent.getBroadcast(activityThis, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val firstTriggerAtMillis = System.currentTimeMillis()
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-            firstTriggerAtMillis,
-            interval,
-            pendingIntent)
     }
 }

@@ -15,7 +15,7 @@ class DownloadQuestions : IntentService("DownloadQuestion") {
     override fun onHandleIntent(intent: Intent?) {
         val executor : Executor = Executors.newSingleThreadExecutor()
         executor.execute {
-            val url = URL("http", "tednewardsandbox.site44.com", 80, "/questions.json")
+            val url = URL("http", intent?.getStringExtra("url"), 80, "/questions.json")
             val urlConnection = url.openConnection() as HttpURLConnection
             if (urlConnection.responseCode == HttpURLConnection.HTTP_OK) {
                 val inputStream = urlConnection.getInputStream()

@@ -8,6 +8,9 @@ import android.util.Log
 class AlarmReciever : BroadcastReceiver(){
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.i("Reciever", "Recieved Broadcast, starting service")
-        context?.startService(Intent(context, DownloadQuestions::class.java))
+        val serviceIntent = Intent(context, DownloadQuestions::class.java).apply {
+            putExtra("url", intent?.getStringExtra("url"))
+        }
+        context?.startService(serviceIntent)
     }
 }

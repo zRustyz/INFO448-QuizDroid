@@ -31,6 +31,9 @@
         <activity android:name=".QuizActivity"></activity>
         <activity android:name=".AnswerActivity"></activity>
         <activity android:name=".DownloadQuestions"></activity>
+        <activity android:name=".Prefs"></activity>
+        <receiver android:name="edu.uw.ischool.rliu05.quizdroid.AlarmReciever" />
+        <service android:name=".DownloadQuestions" />
     </application>
 
 </manifest>
